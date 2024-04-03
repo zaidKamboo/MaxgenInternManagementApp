@@ -54,8 +54,11 @@ function HomePage() {
     if (filters.gender) {
         filteredUsers = filteredUsers.filter(user => user.gender === filters.gender);
     }
-    if (filters.availability) {
-        filteredUsers = filteredUsers.filter(user => user.available === filters.availability);
+    if (filters.available) {
+        filteredUsers = filteredUsers.filter(user => {
+            return user.available === Boolean(filters.available);
+        });
+        console.log(filteredUsers)
     }
 
     const handleAddToTeam = (user) => {
@@ -208,11 +211,10 @@ function HomePage() {
             <section className="filter-section mb-8">
                 <div className="flex items-center justify-between mb-4">
                     <label className="block text-sm font-medium text-gray-700">Availability</label>
-                    <select aria-required onChange={(e) => handleFilterChange('availability', e.target.value)}
+                    <select aria-required onChange={(e) => handleFilterChange('available', e.target.value)}
                         className="mt-1 p-2 border border-gray-300 rounded-md">
                         <option value="">All</option>
                         <option value="true">Available</option>
-                        <option value="false">Not Available</option>
                     </select>
                 </div>
             </section>
