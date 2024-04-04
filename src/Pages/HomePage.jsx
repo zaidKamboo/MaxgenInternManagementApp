@@ -90,7 +90,7 @@ function HomePage() {
                     </div>
                     <img src={user.avatar} alt="User Avatar" className="w-16 h-16 rounded-full border border-gray-300" />
                 </div>
-                {selectedUsers.find(selectedUser => selectedUser.id === user.id) ? (
+                {selectedUsers.find(selectedUser => selectedUser._id === user._id) ? (
                     <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                         onClick={() => handleRemoveFromTeam(user.id)}>
                         Remove from Team
