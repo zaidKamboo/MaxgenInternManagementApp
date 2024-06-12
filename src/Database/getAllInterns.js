@@ -1,4 +1,3 @@
-// getAllInterns.js
 import * as Realm from "realm-web";
 import axios from "axios";
 
@@ -13,32 +12,29 @@ async function loginEmailPassword(email, password) {
     return user;
 }
 
-// Log in and get the user object
-const user = await loginEmailPassword(
-    "zaidkamboo100@gmail.com",
-    "s6JrDVIOIsXsV7wb"
-);
+// Function to get all interns
+async function getAllInterns() {
+    const user = await loginEmailPassword(
+        "zaidkamboo100@gmail.com",
+        "s6JrDVIOIsXsV7wb"
+    );
 
-// Define the data for the request
-const data = JSON.stringify({
-    collection: "interns",
-    database: "test",
-    dataSource: "Cluster0",
-});
+    const data = JSON.stringify({
+        collection: "interns",
+        database: "test",
+        dataSource: "Cluster0",
+    });
 
-// Configure the request
-const config = {
-    method: "post",
-    url: "https://ap-south-1.aws.data.mongodb-api.com/app/data-yzxnyyx/endpoint/data/v1/action/find",
-    headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${user?.accessToken}`,
-    },
-    data: data,
-};
+    const config = {
+        method: "post",
+        url: "https://ap-south-1.aws.data.mongodb-api.com/app/data-yzxnyyx/endpoint/data/v1/action/find",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user?.accessToken}`,
+        },
+        data: data,
+    };
 
-// Fetch data function
-const fetchData = async () => {
     try {
         const response = await axios(config);
         return response.data.documents;
@@ -46,6 +42,6 @@ const fetchData = async () => {
         console.error(error);
         return [];
     }
-};
+}
 
-export default fetchData;
+export default getAllInterns;

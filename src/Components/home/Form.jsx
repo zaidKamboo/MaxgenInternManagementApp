@@ -31,28 +31,32 @@ const Form = ({ type }) => {
         e.preventDefault();
         const internData = { name, domain, startDate, duration, technologies: technologies.split(" "), endDate };
 
-        if (type === "Edit") {
-            const response = await editIntern(intern._id, internData);
-            if (response) {
-                dispatch(toggleRefresh());
-                navigate("/");
+        try {
+            if (type === "Edit") {
+                const response = await editIntern(intern._id, internData);
+                if (response) {
+                    dispatch(toggleRefresh());
+                    navigate("/");
+                } else {
+                    console.log("Failed to edit intern");
+                }
             } else {
-                console.log("Failed to edit intern");
+                const response = await addIntern(internData);
+                if (response) {
+                    setDuration("");
+                    setDomain("");
+                    setName("");
+                    setStartDate("");
+                    setTechnologies("");
+                    setEndDate("");
+                    dispatch(toggleRefresh());
+                    navigate("/");
+                } else {
+                    console.log("Failed to add intern");
+                }
             }
-        } else {
-            const response = await addIntern(internData);
-            if (response) {
-                setDuration("");
-                setDomain("");
-                setName("");
-                setStartDate("");
-                setTechnologies("");
-                setEndDate("");
-                dispatch(toggleRefresh());
-                navigate("/");
-            } else {
-                console.log("Failed to add intern");
-            }
+        } catch (error) {
+            console.error("Error handling submit:", error);
         }
     };
 
@@ -61,7 +65,7 @@ const Form = ({ type }) => {
             {type === "Edit" && <Link className="text-sky-400" to="/">Back to Home</Link>}
             <form onSubmit={handleSubmit} className='border rounded-lg shadow-md shadow-emerald-400 border-emerald-400 m-2 px-4 py-2 w-full mx-auto '>
                 <h1 className="text-center text-sky-300 my-7 text-2xl">
-                    {type === "Edit" ? <>Please Edit The details you want to : </> : <>Please fill the details to add intern information ...</>}
+                    {type === "Edit" ? "Please Edit The details you want to :" : "Please fill the details to add intern information ..."}
                 </h1>
                 <div className='my-6 w-full flex justify-between'>
                     <label htmlFor="internName" className='text-sky-300 px-5'>Enter Intern Name Here : </label>

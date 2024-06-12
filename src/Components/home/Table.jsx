@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { setInterns, toggleRefresh } from '../Store/Slices/internsSlice';
 import { setIntern } from '../Store/Slices/internSlice';
-import fetchData from '../../Database/getAllInterns';
+import getAllInterns from '../../Database/getAllInterns';
 import deleteIntern from '../../Database/deleteIntern';
 
 const Table = () => {
@@ -12,18 +12,17 @@ const Table = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchDataAsync = async () => {
+        const fetchInterns = async () => {
             try {
-                const data = await fetchData(); // Wait for the data to be fetched
-                dispatch(setInterns(data)); // Set the fetched data into the Redux store
+                const data = await getAllInterns();
+                dispatch(setInterns(data));
             } catch (error) {
                 console.log(error.message);
             }
         };
 
-        fetchDataAsync(); // Call the async function
+        fetchInterns();
     }, [dispatch, refresh]);
-
 
     const handleDelete = async (internId) => {
         const confirmed = window.confirm("Do you really want to delete this record?");

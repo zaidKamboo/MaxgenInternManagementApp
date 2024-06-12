@@ -1,4 +1,3 @@
-// editIntern.js
 import * as Realm from "realm-web";
 import axios from "axios";
 
@@ -13,14 +12,13 @@ async function loginEmailPassword(email, password) {
     return user;
 }
 
-// Log in and get the user object
-const user = await loginEmailPassword(
-    "zaidkamboo100@gmail.com",
-    "s6JrDVIOIsXsV7wb"
-);
-
 // Define the function to edit an intern
 const editIntern = async (internId, internData) => {
+    const user = await loginEmailPassword(
+        "zaidkamboo100@gmail.com",
+        "s6JrDVIOIsXsV7wb"
+    );
+
     const data = JSON.stringify({
         collection: "interns",
         database: "test",
