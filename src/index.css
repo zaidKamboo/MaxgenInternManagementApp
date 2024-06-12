@@ -2,30 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-#root {
-  overflow-x: hidden;
-}
-
 ::-webkit-scrollbar {
-  width: 6px;
+    background-color: #020617;
 }
-
-::-webkit-scrollbar-track {
-  background: transparent;
-  backdrop-filter: blur(10px);
-}
-
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 50vw;
-}
+    border-radius: 20px;
+    background: linear-gradient(#7BD1FC, #3B82F6, #7BD1FC);
+    width: 100px;
+    height: 10px;
 
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+}
+::-webkit-scrollbar-track {
+    width: 2.5px;
 }
