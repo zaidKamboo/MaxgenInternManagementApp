@@ -43,9 +43,9 @@ const Table = () => {
                 <h1 className="text-3xl font-bold mb-5 text-center text-cyan-400">Interns Information</h1>
                 <div className="shadow-2xl rounded-xl overflow-hidden shadow-cyan-400">
                     <div className="overflow-x-auto">
-                        <table className="min-w-full bg-black border border-black">
+                        <table className="min-w-[90z] bg-black border border-black">
                             <thead>
-                                <tr>
+                                <tr  >
                                     <th className="py-3 px-6 text-left">Sr No</th>
                                     <th className="py-3 px-6 text-left">Name</th>
                                     <th className="py-3 px-6 text-left">Domain</th>
@@ -61,7 +61,7 @@ const Table = () => {
                                 {interns.map((intern, index) => (
                                     <tr
                                         key={index}
-                                        className={`border-1 border-black ${index % 2 === 0 ? 'bg-sky-950' : 'bg-slate-950'} hover:bg-gray-950 hover:text-red-500`}
+                                        className={`border-1 border-black ${index % 2 === 0 ? 'bg-gradient-to-r from-cyan-400 via-white to-cyan-400 text-black' : 'bg-gradient-to-r from-slate-950 via-black to-slate-950'} hover:bg-gradient-to-r  hover:from-slate-950 hover:via-cyan-950 hover:to-slate-950 transition duration-700 ease-in-out hover:text-slate-200`}
                                     >
                                         <td className="py-3 px-6">{index + 1}</td>
                                         <td className="py-3 px-6">{intern?.name}</td>
