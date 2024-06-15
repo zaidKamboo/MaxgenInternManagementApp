@@ -38,6 +38,7 @@ const addIntern = async (internData) => {
 
     try {
         const response = await axios(config);
+        console.log(response);
         return response.data;
     } catch (error) {
         console.error(error);

@@ -10,8 +10,50 @@
     background: linear-gradient(#7BD1FC, #3B82F6, #7BD1FC);
     width: 100px;
     height: 10px;
-
 }
 ::-webkit-scrollbar-track {
     width: 2.5px;
+}
+/* autofill.css */
+@layer base {
+    input:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+        box-shadow: 0 0 0px 1000px transparent inset !important;
+        transition: background-color 1000s ease-in-out 0s !important;
+        background-clip: content-box !important;
+        -webkit-text-fill-color: aqua !important;
+        background-color: transparent;
+        /* Ensure text color is applied */
+    }
+}
+
+.submitBtn :hover {
+    animation: borderAnime 4s ease-in-out infinite;
+    transition: all .5s ease-in-out;
+}
+
+@keyframes borderAnime {
+    0% {
+        border: 1px solid transparent
+    }
+
+    25% {
+        border: 1px solid transparent;
+        border-top: 1px solid aqua;
+    }
+
+    50% {
+        border: 1px solid transparent;
+        border-right: 1px solid aqua;
+    }
+
+    75% {
+        border: 1px solid transparent;
+        border-bottom: 1px solid aqua;
+    }
+
+    100% {
+        border: 1px solid transparent;
+        border-left: 1px solid aqua;
+    }
 }

@@ -1,6 +1,6 @@
 import AllRoutes from "./AllRoutes/AllRoutes"
 import { BrowserRouter } from "react-router-dom"
-import Navbar from "./Components/Navbar"
+import Navbar from "./Components/Common/Navbar"
 const App = () => {
   return (
     <BrowserRouter>

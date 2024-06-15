@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { interns: [], refresh: false };
+const initialState = { interns: [] };
 
 const internsSlice = createSlice({
     name: "interns",
@@ -10,14 +10,11 @@ const internsSlice = createSlice({
             state.interns = action.payload;
             state.refresh = !state.refresh;
         },
-        toggleRefresh: (state) => {
-            state.refresh = !state.refresh;
-        },
         resetInterns: () => {
             return initialState;
         },
     },
 });
 
-export const { setInterns, resetInterns, toggleRefresh } = internsSlice.actions;
+export const { setInterns, resetInterns } = internsSlice.actions;
 export default internsSlice;

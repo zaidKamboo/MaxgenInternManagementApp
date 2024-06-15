@@ -1,40 +1,34 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { setInterns, toggleRefresh } from '../Store/Slices/internsSlice';
+import { useNavigate } from 'react-router-dom';
+import { setInterns } from '../Store/Slices/internsSlice';
+import getInterns from "../../Database/getAllInterns"
 import { setIntern } from '../Store/Slices/internSlice';
-import getAllInterns from '../../Database/getAllInterns';
-import deleteIntern from '../../Database/deleteIntern';
+import backendHost from '../../Api';
 
 const Table = () => {
     const dispatch = useDispatch();
-    const { interns, refresh } = useSelector(store => store.interns);
+    const { interns } = useSelector(store => store.interns);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchInterns = async () => {
             try {
-                const data = await getAllInterns();
-                dispatch(setInterns(data));
+                // const res = await backendHost.get("/intern/getInterns");
+                // dispatch(setInterns(res?.data?.interns));
+                const res = await getInterns()
+                console.log(res)
+                dispatch(setInterns(res))
             } catch (error) {
                 console.log(error.message);
             }
         };
-
         fetchInterns();
-    }, [dispatch, refresh]);
+    }, []); 
 
-    const handleDelete = async (internId) => {
-        const confirmed = window.confirm("Do you really want to delete this record?");
-        if (confirmed) {
-            const response = await deleteIntern(internId);
-            if (response) {
-                dispatch(toggleRefresh());
-                navigate("/");
-            } else {
-                console.log("Failed to delete intern");
-            }
-        }
+    const handleDelete = (intern) => {
+        dispatch(setIntern(intern));
+        navigate(`/deleteIntern/${intern?._id}`);
     };
 
     return (
@@ -43,25 +37,25 @@ const Table = () => {
                 <h1 className="text-3xl font-bold mb-5 text-center text-cyan-400">Interns Information</h1>
                 <div className="shadow-2xl rounded-xl overflow-hidden shadow-cyan-400">
                     <div className="overflow-x-auto">
-                        <table className="min-w-[90z] bg-black border border-black">
+                        <table className="min-w-full bg-black border border-black">
                             <thead>
-                                <tr  >
-                                    <th className="py-3 px-6 text-left">Sr No</th>
-                                    <th className="py-3 px-6 text-left">Name</th>
-                                    <th className="py-3 px-6 text-left">Domain</th>
-                                    <th className="py-3 px-6 text-left">Start Date</th>
-                                    <th className="py-3 px-6 text-left">End Date</th>
-                                    <th className="py-3 px-6 text-left">Duration</th>
-                                    <th className="py-3 px-6 text-left">Technologies</th>
-                                    <th className="py-3 px-6 text-left">Edit</th>
-                                    <th className="py-3 px-6 text-left">Delete</th>
+                                <tr>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Sr No</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Name</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Domain</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Start Date</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">End Date</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Duration</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Technologies</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Edit</th>
+                                    <th className="py-3 px-6 text-left text-cyan-400">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {interns.map((intern, index) => (
+                                {interns?.map((intern, index) => (
                                     <tr
-                                        key={index}
-                                        className={`border-1 border-black ${index % 2 === 0 ? 'bg-gradient-to-r from-cyan-400 via-white to-cyan-400 text-black' : 'bg-gradient-to-r from-slate-950 via-black to-slate-950'} hover:bg-gradient-to-r  hover:from-slate-950 hover:via-cyan-950 hover:to-slate-950 transition duration-700 ease-in-out hover:text-slate-200`}
+                                        key={intern._id}
+                                        className={`border-1 border-black ${index % 2 === 0 ? 'bg-gradient-to-r from-cyan-400 via-white to-cyan-400 text-black' : 'bg-gradient-to-r from-slate-950 via-black to-slate-950'} hover:bg-gradient-to-r hover:from-slate-950 hover:via-cyan-950 hover:to-slate-950 transition duration-700 ease-in-out hover:text-slate-200`}
                                     >
                                         <td className="py-3 px-6">{index + 1}</td>
                                         <td className="py-3 px-6">{intern?.name}</td>
@@ -72,16 +66,19 @@ const Table = () => {
                                             {intern?.duration}
                                         </td>
                                         <td className="py-3 px-6">{intern?.technologies.join(', ')}</td>
-                                        <td className="py-3 px-6 text-sky-400 cursor-pointer" onClick={() => {
-                                            dispatch(setIntern(intern));
-                                            navigate(`/edit/${intern?._id}`);
-                                        }}>
+                                        <td
+                                            className={`py-3 px-6 cursor-pointer ${index % 2 === 0 ? "text-emerald-500 bg-slate-950 hover:text-cyan-500" : "text-sky-400"}`}
+                                            onClick={() => {
+                                                dispatch(setIntern(intern));
+                                                navigate(`/edit/${intern?._id}`);
+                                            }}
+                                        >
                                             Edit
                                         </td>
                                         <td className="py-3 px-6">
-                                            <Link className="text-red-600 cursor-pointer" onClick={() => handleDelete(intern._id)}>
+                                            <button className="text-red-600 cursor-pointer" onClick={() => handleDelete(intern)}>
                                                 Delete
-                                            </Link>
+                                            </button>
                                         </td>
                                     </tr>
                                 ))}
