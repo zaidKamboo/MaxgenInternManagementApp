@@ -32,38 +32,38 @@ const Form = ({ type }) => {
         const internData = { name, domain, startDate, endDate, duration, technologies: technologies.split(" ") };
         try {
             if (type === "Edit") {
-                backendHost.post(`/intern/editIntern/${intern._id}`, internData)
-                    .then(res => {
-                        console.log(res?.data)
-                        navigate("/")
-                    })
-                    .catch(err => {
-                        console.log(err?.message, err)
-                    })
-                // const res = await editIntern(intern?._id, internData)
-                // navigate("/")
+                //     backendHost.post(`/intern/editIntern/${intern._id}`, internData)
+                //         .then(res => {
+                //             console.log(res?.data)
+                //             navigate("/")
+                //         })
+                //         .catch(err => {
+                //             console.log(err?.message, err)
+                //         })
+                const res = await editIntern(intern?._id, internData)
+                navigate("/")
             } else if (type === "Delete") {
-                backendHost.delete(`/intern/deleteIntern/${intern?._id}`)
-                    .then(res => {
-                        console.log(res?.data)
-                        navigate("/")
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-                // const res = await deleteIntern(intern?._id);
-                // navigate("/")
+                // backendHost.delete(`/intern/deleteIntern/${intern?._id}`)
+                //     .then(res => {
+                //         console.log(res?.data)
+                //         navigate("/")
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //     })
+                const res = await deleteIntern(intern?._id);
+                navigate("/")
             } else {
-                backendHost.post("/intern/addIntern", internData)
-                    .then(res => {
-                        console.log(res?.data)
-                        navigate("/")
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
-                // const res = await addIntern(internData)
-                // navigate("/")
+                // backendHost.post("/intern/addIntern", internData)
+                //     .then(res => {
+                //         console.log(res?.data)
+                //         navigate("/")
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //     })
+                const res = await addIntern(internData)
+                navigate("/")
             }
         } catch (error) {
             console.error("Error handling submit:", error);

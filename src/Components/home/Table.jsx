@@ -15,21 +15,21 @@ const Table = () => {
     useEffect(() => {
         const fetchInterns = async () => {
             try {
-                backendHost.get("/intern/getInterns")
-                    .then(res => {
-                        dispatch(setInterns(res?.data?.interns));
-                    })
-                    .catch(err => {
-                        console.log(err)
-                        if (err?.message === 'Network Error') {
-                            dispatch(showAlert({ message: err?.message, type: 'danger', show: true }));
-                        } else {
-                            dispatch(showAlert({ message: err?.response?.data?.message, type: 'danger', show: true }));
-                        }
-                    })
-                // const res = await getInterns()
-                // console.log(res)
-                // dispatch(setInterns(res))
+                // backendHost.get("/intern/getInterns")
+                //     .then(res => {
+                //         dispatch(setInterns(res?.data?.interns));
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //         if (err?.message === 'Network Error') {
+                //             dispatch(showAlert({ message: err?.message, type: 'danger', show: true }));
+                //         } else {
+                //             dispatch(showAlert({ message: err?.response?.data?.message, type: 'danger', show: true }));
+                //         }
+                //     })
+                const res = await getInterns()
+                console.log(res)
+                dispatch(setInterns(res))
             } catch (error) {
                 console.log(error.message);
                 dispatch(showAlert({ message: error?.message, type: 'danger', show: true }))
